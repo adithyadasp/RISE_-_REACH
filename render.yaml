@@ -1,0 +1,41 @@
+services:
+  # Backend API Service - Node.js
+  - type: web
+    name: womens-helpline-backend
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: backend
+    
+    # Build and Start Commands
+    buildCommand: npm install
+    startCommand: npm start
+    
+    # Environment variables
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+    
+    # Auto-deploy when code is pushed
+    autoRedeploy: true
+    
+    # Health check to verify service is running
+    healthCheckPath: /
+    
+    # Increase idle timeout for free tier
+    maxShutdownDelay: 30
+
+  # Frontend Static Site - HTML/CSS/JS
+  - type: static_site
+    name: womens-helpline-frontend
+    staticPublishPath: frontend
+    plan: free
+    region: oregon
+    autoRedeploy: true
+    
+    # For single-page apps (if needed in future):
+    # publishPath: /
+    # Set runtime environment if needed
+    # buildCommand: npm run build
